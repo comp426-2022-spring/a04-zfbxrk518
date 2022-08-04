@@ -61,7 +61,6 @@ app.use((req, res, next) => {
 });
 
 
-const debug = args.debug || false
 if (args.debug || args.d) {
     app.get('/app/log/access/', (req, res, next) => {
         const stmt = logdb.prepare("SELECT * FROM accesslog").all();
@@ -72,10 +71,9 @@ if (args.debug || args.d) {
     })
 }
 
-const log = args.log || true
-if (args.log == 'false') {
-    console.log("NOTICE: not creating file access.log")
-} else {
+if (args.log) {
     const accessLog = fs.createWriteStream('access.log', { flags: 'a' })
     app.use(morgan('combined', { stream: accessLog }))
+} else {
+    console.log("NOTICE: not creating file access.log")
 }
