@@ -4,6 +4,9 @@ var app = express()
 const fs = require('fs')
 const morgan = require('morgan')
 const args = require('minimist')(process.argv.slice(2))
+const http = require('http')
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 
 
